@@ -5,6 +5,7 @@ mic_config.json
 *.exe
 *.lnk
 *.gif
+!demo.gif
 *.jpg
 *.ico
 *.obj

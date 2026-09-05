@@ -8,10 +8,6 @@ and report back — out loud, in real time.
 
 No cloud, no account. The language model runs locally through Ollama.
 
-## Demo
-
-![Seven demo](demo.gif)
-
 ---
 
 ## Quick start (fresh machine)

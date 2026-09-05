@@ -14,7 +14,7 @@ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Write-Host "Windows path: $ScriptDir" -ForegroundColor Gray
 
 # Convert Windows path to WSL path
-# C:\Users\User\Downloads\jarvis-main\jarvis-main -> /mnt/c/Users/User/Downloads/jarvis-main/jarvis-main
+# C:\Users\User\Downloads\seven -> /mnt/c/Users/User/Downloads/seven
 $WSLPath = $ScriptDir -replace '\\', '/' -replace '^([A-Za-z]):', '/mnt/$1' -replace ' ', '\\ '
 $WSLPath = $WSLPath.ToLower() -replace '/mnt/c/', '/mnt/c/'  # Keep case sensitivity
 Write-Host "WSL path: $WSLPath" -ForegroundColor Gray

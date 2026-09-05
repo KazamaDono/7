@@ -1,6 +1,5 @@
 """
-jarvis_sphere_visualizer.py - Native PyQt5 Visualizer with Siri-like Sphere Motion
-Fixed version with proper integration
+seven_sphere_visualizer.py - Native PyQt5 Visualizer with Siri-like Sphere Motion
 """
 
 import sys
@@ -165,19 +164,19 @@ class AnimatedSphere(QWidget):
         painter.setBrush(QBrush(core_gradient))
         painter.drawEllipse(center, core_radius, core_radius)
 
-class JarvisSphereWindow(QMainWindow):
+class SevenSphereWindow(QMainWindow):
     """Main window with sphere visualization"""
     
-    def __init__(self, jarvis_core=None):
+    def __init__(self, seven_core=None):
         super().__init__()
-        self.jarvis_core = jarvis_core
-        self.setWindowTitle("JARVIS AI Assistant")
+        self.seven_core = seven_core
+        self.setWindowTitle("SEVEN AI Assistant")
         self.setGeometry(100, 100, 800, 600)
         self.setStyleSheet("background-color: #000000;")
         
-        # Connect to JARVIS core if provided
-        if self.jarvis_core:
-            self.jarvis_core.visualizer = self
+        # Connect to SEVEN core if provided
+        if self.seven_core:
+            self.seven_core.visualizer = self
         
         # Central widget
         central_widget = QWidget()
@@ -223,7 +222,7 @@ class JarvisSphereWindow(QMainWindow):
         layout = QHBoxLayout()
         top_widget.setLayout(layout)
         
-        title = QLabel("⚡ JARVIS AI Assistant")
+        title = QLabel("⚡ SEVEN AI Assistant")
         title.setStyleSheet("color: #00aaff; font-size: 18px; font-weight: bold; padding-left: 10px;")
         layout.addWidget(title)
         
@@ -289,12 +288,12 @@ class JarvisSphereWindow(QMainWindow):
         self.sphere = AnimatedSphere()
         layout.addWidget(self.sphere, alignment=Qt.AlignCenter)
         
-        self.status_label = QLabel("JARVIS Ready")
+        self.status_label = QLabel("SEVEN Ready")
         self.status_label.setAlignment(Qt.AlignCenter)
         self.status_label.setStyleSheet("color: #00aaff; font-size: 18px; margin-top: 20px;")
         layout.addWidget(self.status_label)
         
-        hint_label = QLabel("Say 'Jarvis' to activate")
+        hint_label = QLabel("Say 'Seven' to activate")
         hint_label.setAlignment(Qt.AlignCenter)
         hint_label.setStyleSheet("color: #666666; font-size: 12px; margin-top: 10px;")
         layout.addWidget(hint_label)
@@ -356,22 +355,22 @@ class JarvisSphereWindow(QMainWindow):
         return widget
     
     def send_message(self):
-        """Send text message to JARVIS"""
+        """Send text message to SEVEN"""
         message = self.input_field.toPlainText().strip()
-        if message and self.jarvis_core:
+        if message and self.seven_core:
             self.add_chat_message("You", message)
             self.input_field.clear()
             
             # Process command
             self.sphere.set_state("processing")
-            response = self.jarvis_core._process_command(message)
-            self.add_chat_message("JARVIS", response)
+            response = self.seven_core._process_command(message)
+            self.add_chat_message("SEVEN", response)
             self.sphere.set_state("idle")
     
     def add_chat_message(self, sender, message):
         """Add message to chat display"""
         timestamp = datetime.now().strftime("%H:%M:%S")
-        color = "#00aaff" if sender == "JARVIS" else "#ffffff"
+        color = "#00aaff" if sender == "SEVEN" else "#ffffff"
         self.chat_display.append(f"<font color='{color}'><b>[{timestamp}] {sender}:</b> {message}</font>")
         # Auto-scroll
         self.chat_display.verticalScrollBar().setValue(
@@ -379,17 +378,17 @@ class JarvisSphereWindow(QMainWindow):
         )
     
     def update_status(self):
-        """Update status from JARVIS core"""
-        if self.jarvis_core:
-            if hasattr(self.jarvis_core, 'is_listening') and self.jarvis_core.is_listening:
+        """Update status from SEVEN core"""
+        if self.seven_core:
+            if hasattr(self.seven_core, 'is_listening') and self.seven_core.is_listening:
                 self.sphere.set_state("listening", self.current_audio_level)
                 self.status_label.setText("🎤 Listening...")
-            elif hasattr(self.jarvis_core, 'is_speaking') and self.jarvis_core.is_speaking:
+            elif hasattr(self.seven_core, 'is_speaking') and self.seven_core.is_speaking:
                 self.sphere.set_state("speaking", 0.7)
                 self.status_label.setText("🔊 Speaking...")
             else:
                 self.sphere.set_state("idle", 0)
-                self.status_label.setText("JARVIS Ready")
+                self.status_label.setText("SEVEN Ready")
     
     def simulate_audio(self):
         """Simulate audio level"""
@@ -405,14 +404,14 @@ class JarvisSphereWindow(QMainWindow):
     
     def close_app(self):
         """Close application"""
-        if self.jarvis_core:
-            self.jarvis_core.running = False
+        if self.seven_core:
+            self.seven_core.running = False
         self.close()
 
-def run_sphere_visualizer(jarvis_core=None):
-    """Run JARVIS with sphere visualizer"""
+def run_sphere_visualizer(seven_core=None):
+    """Run SEVEN with sphere visualizer"""
     app = QApplication(sys.argv)
-    window = JarvisSphereWindow(jarvis_core=jarvis_core)
+    window = SevenSphereWindow(seven_core=seven_core)
     window.show()
     sys.exit(app.exec_())
 

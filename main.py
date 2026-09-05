@@ -79,7 +79,7 @@ class Config:
     #   export SEVEN_MODEL=qwen3:4b
     agent_model: str = os.environ.get("SEVEN_MODEL", "qwen3:1.7b")
     
-    # Voice settings - Professional British male voice (JARVIS style)
+    # Voice settings - Professional British male voice
     voice: str = "en-GB-RyanNeural"
     voice_rate: str = "-5%"
     voice_volume: str = "+0%"

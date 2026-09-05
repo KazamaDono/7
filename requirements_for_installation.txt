@@ -1,0 +1,78 @@
+wsl
+sudo apt update
+python -m venv voice_env
+source voice_env/bin/activate
+pip install -r requirements.txt
+sudo apt install portaudio19-dev
+sudo apt install -y portaudio19-dev python3-dev build-essential
+pip install pyaudio
+
+ollama serve
+ollama pull qwen3:1.7b
+
+# Installing
+sudo apt install pulseaudio
+sudo nano /etc/pulse/default.pa
+load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1
+load-module module-esound-protocol-tcp auth-ip-acl=127.0.0.1
+pulseaudio --start
+export PULSE_SERVER=127.0.0.1
+echo "export PULSE_SERVER=127.0.0.1" >> ~/.bashrc
+
+python3 main.py
+
+# Configure MIC
+win + mic privacy settings
+let desktop apps access mic
+
+
+Trouble shooting:
+TTS error: 403, message='Invalid response status', url='wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&ConnectionId=69811b049f084bc8b8b0a79ea439bf5c'
+
+In this case just use:
+pip install --upgrade edge-tts
+
+
+Some urls for help with audio/pyaudio trouble shooting:
+https://github.com/macliszt/How-to-install-Pyaudio-library-in-windows
+http://qiniucdn.star-lai.cn/portal/2016/09/05/tu3p2vd4znn#pyaudio
+https://github.com/microsoft/WSL/discussions/9624?sort=new
+https://github.com/bastibe/SoundCard
+https://www.freedesktop.org/wiki/Software/PulseAudio/Download/
+
+----
+
+Motion detection trouble shooting camera;
+
+Open PowerShell as Administrator and run:
+winget install --interactive --exact dorssel.usbipd-win
+
+In your WSL2 Ubuntu terminal, run:
+sudo apt update
+sudo apt install linux-tools-generic hwdata -y
+
+Back in PowerShell (Admin) , list all USB devices:
+usbipd list
+
+Still in PowerShell (Admin) , run these commands:
+# Bind the device (makes it shareable)
+usbipd bind --busid 1-3
+
+# Attach to WSL (your WSL terminal must be running in the background)
+usbipd attach --wsl --busid 1-3
+
+Back in your WSL Ubuntu terminal, check if the camera is recognized:
+# Check USB devices
+lsusb
+
+# Check for video device
+ls -l /dev/video*
+
+
+In WSL terminal, give your user access to the camera:
+# Add your user to the video group
+sudo usermod -aG video $USER
+
+# Then restart WSL or log out/in
+
+

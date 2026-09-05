@@ -1,0 +1,15 @@
+.env
+mic_config.json
+command_execution.log
+.uv-bootstrap/
+hologram/.venv/
+__pycache__/
+*.pyc
+voice_env/
+seven_memory/
+seven_state.json
+jarvis.log
+*.pcap
+recordings/
+*.exe
+*.lnk
